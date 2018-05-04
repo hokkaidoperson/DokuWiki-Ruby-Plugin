@@ -1,0 +1,7 @@
+base ruby
+author HokkaidoPerson
+email dosankomali@yahoo.co.jp
+date 2018-05-04
+name Ruby Plugin
+desc Add ruby (normally used to display Japanese Kana on Chinese characters to describe how to read the Chinese characters.  This plugin is mainly for Japanese surroundings)
+url http://www.dokuwiki.org/plugin:ruby
