@@ -15,11 +15,11 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
     }
 
     function connectTo($mode) {
-      $this->Lexer->addSpecialPattern('\{\{ruby:[^}]*\}\}',$mode,'plugin_ruby');
+      $this->Lexer->addSpecialPattern('\{\{ruby\|[^}]*\}\}',$mode,'plugin_ruby');
     }
   
     function handle($match, $state, $pos, &$handler){
-        return explode(':', substr($match, strlen('{{ruby:'), -2));
+        return explode('|', substr($match, strlen('{{ruby|'), -2));
     }
  
     function render($mode, &$renderer, $data) {
