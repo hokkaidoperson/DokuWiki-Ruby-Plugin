@@ -18,11 +18,11 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
       $this->Lexer->addSpecialPattern('\{\{ruby\|[^}]*\}\}',$mode,'plugin_ruby');
     }
   
-    function handle($match, $state, $pos, &$handler){
+    function handle($match, $state, $pos, Doku_Handler $handler) {
         return explode('|', substr($match, strlen('{{ruby|'), -2));
     }
  
-    function render($mode, &$renderer, $data) {
+    function render($format, Doku_Renderer $renderer, $data) {
         $renderer->doc .= '<ruby><rb>' .htmlspecialchars($data[0]) . '</rb><rp>' . $this->getConf('parenthesis') . '</rp><rt>' .htmlspecialchars($data[1]) . '</rt><rp>' . $this->getConf('parenthesisClosing') . '</rp></ruby>';
     }
 }
