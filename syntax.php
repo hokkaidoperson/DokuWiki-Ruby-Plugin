@@ -1,4 +1,16 @@
 <?php
+/**
+ * DokuWiki Ruby Plugin
+ *
+ * Provide a ruby annotation, which is used to indicate the pronunciation
+ * or meaning of the corresponding characters.
+ * This kind of annotation is often used in Japanese publications.
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Hokkaidoperson <dosankomali@yahoo.co.jp>
+ *
+ */
+
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
