@@ -29,7 +29,6 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
     }
 
     function handle($match, $state, $pos, Doku_Handler $handler) {
-<<<<<<< HEAD
         //Get the texts
         //$texts[0] ... normal text / $texts[1] ... ruby
         $texts = explode('|', substr($match, strlen('{{ruby|'), -2));
@@ -55,12 +54,5 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
         } else {
             $renderer->doc .= '<ruby><rb>' . htmlspecialchars($data[0]) . '</rb><rp>' . htmlspecialchars($data[2]) . '</rp><rt>' . htmlspecialchars($data[1]) . '</rt><rp>' . htmlspecialchars($data[3]) . '</rp></ruby>';
         }
-=======
-        return explode('|', substr($match, strlen('{{ruby|'), -2));
-    }
-
-    function render($format, Doku_Renderer $renderer, $data) {
-        $renderer->doc .= '<ruby><rb>' .htmlspecialchars($data[0]) . '</rb><rp>' . $this->getConf('parenthesis') . '</rp><rt>' .htmlspecialchars($data[1]) . '</rt><rp>' . $this->getConf('parenthesisClosing') . '</rp></ruby>';
->>>>>>> cbc416c66eef3a5554b980f59dfc2923048710a7
     }
 }
