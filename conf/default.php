@@ -1,4 +1,3 @@
 <?php
 
-$conf['parenthesis'] = '(';
-$conf['parenthesisClosing'] = ')';
+$conf['parentheses'] = '()';
