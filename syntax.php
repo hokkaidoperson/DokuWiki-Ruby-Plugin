@@ -59,9 +59,17 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
      */
     function render($format, Doku_Renderer $renderer, $data) {
         if ($data[2] == null) {
-            $renderer->doc .= '<ruby><rb>' . htmlspecialchars($data[0]) . '</rb><rt>' . htmlspecialchars($data[1]) . '</rt></ruby>';
+            $renderer->doc .= '<ruby>';
+            $renderer->doc .= '<rb>' . htmlspecialchars($data[0]) . '</rb>';
+            $renderer->doc .= '<rt>' . htmlspecialchars($data[1]) . '</rt>';
+            $renderer->doc .= '</ruby>';
         } else {
-            $renderer->doc .= '<ruby><rb>' . htmlspecialchars($data[0]) . '</rb><rp>' . htmlspecialchars($data[2]) . '</rp><rt>' . htmlspecialchars($data[1]) . '</rt><rp>' . htmlspecialchars($data[3]) . '</rp></ruby>';
+            $renderer->doc .= '<ruby>';
+            $renderer->doc .= '<rb>' . htmlspecialchars($data[0]) . '</rb>';
+            $renderer->doc .= '<rp>' . htmlspecialchars($data[2]) . '</rp>';
+            $renderer->doc .= '<rt>' . htmlspecialchars($data[1]) . '</rt>';
+            $renderer->doc .= '<rp>' . htmlspecialchars($data[3]) . '</rp>';
+            $renderer->doc .= '</ruby>';
         }
     }
 }
