@@ -24,10 +24,16 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
         return 150;
     }
 
+   /**
+    * Connect lookup pattern to lexer
+    */
     function connectTo($mode) {
       $this->Lexer->addSpecialPattern('\{\{ruby\|[^}]*\}\}',$mode,'plugin_ruby');
     }
 
+    /**
+     * Handle the match
+     */
     function handle($match, $state, $pos, Doku_Handler $handler) {
         //Get the texts
         //$texts[0] ... normal text / $texts[1] ... ruby
@@ -48,6 +54,9 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
         return array($texts[0],$texts[1],$lprt,$rprt);
     }
 
+    /**
+     * Create output
+     */
     function render($format, Doku_Renderer $renderer, $data) {
         if ($data[2] == null) {
             $renderer->doc .= '<ruby><rb>' . htmlspecialchars($data[0]) . '</rb><rt>' . htmlspecialchars($data[1]) . '</rt></ruby>';
