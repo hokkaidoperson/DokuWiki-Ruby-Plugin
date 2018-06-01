@@ -35,23 +35,9 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
      * Handle the match
      */
     function handle($match, $state, $pos, Doku_Handler $handler) {
-        //Get the texts
-        //$texts[0] ... normal text / $texts[1] ... ruby
-        $texts = explode('|', substr($match, strlen('{{ruby|'), -2));
-
-        //Get the data of parentheses
-        $prts = $this->getConf('parentheses');
-
-        //If there is only one character in $prts, rp tags won't be outputted
-        if (mb_strlen($prts) <= 1) {
-            $lprt = null;
-            $rprt = null;
-        } else {
-            $lprt = mb_substr($prts,0,1);
-            $rprt = mb_substr($prts,1,1);
-        }
-        
-        return array($texts[0],$texts[1],$lprt,$rprt);
+        // get ruby base and text component of a ruby annotation
+        $data = explode('|', substr($match, strlen('{{ruby|'), -2));
+        return $data;
     }
 
     /**
@@ -83,22 +69,6 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
             // omit ruby text if a pair of parentheses is not set
             $renderer->doc .= hsc($data[0]);
             $renderer->doc .= !empty($rp) ? hsc($rp[0].$data[1].$rp[1]) : '';
-        }
-        return;
-
-
-        if ($data[2] == null) {
-            $renderer->doc .= '<ruby>';
-            $renderer->doc .= '<rb>' . htmlspecialchars($data[0]) . '</rb>';
-            $renderer->doc .= '<rt>' . htmlspecialchars($data[1]) . '</rt>';
-            $renderer->doc .= '</ruby>';
-        } else {
-            $renderer->doc .= '<ruby>';
-            $renderer->doc .= '<rb>' . htmlspecialchars($data[0]) . '</rb>';
-            $renderer->doc .= '<rp>' . htmlspecialchars($data[2]) . '</rp>';
-            $renderer->doc .= '<rt>' . htmlspecialchars($data[1]) . '</rt>';
-            $renderer->doc .= '<rp>' . htmlspecialchars($data[3]) . '</rp>';
-            $renderer->doc .= '</ruby>';
         }
     }
 }
