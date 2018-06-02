@@ -24,11 +24,11 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
         return 150;
     }
 
-   /**
-    * Connect lookup pattern to lexer
-    */
+    /**
+     * Connect lookup pattern to lexer
+     */
     function connectTo($mode) {
-      $this->Lexer->addSpecialPattern('\{\{ruby\|[^}]*\}\}',$mode,'plugin_ruby');
+        $this->Lexer->addSpecialPattern('\{\{ruby\|[^}]*\}\}', $mode, 'plugin_ruby');
     }
 
     /**
@@ -57,18 +57,13 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
         }
 
         if ($format == 'xhtml') {
-            // create a ruby annotation for words and phrases
+            // create a Group-ruby annotation
             $renderer->doc .= '<ruby>';
             $renderer->doc .= '<rb>'.hsc($data[0]).'</rb>';
             $renderer->doc .= isset($rp[0]) ? '<rp>'.hsc($rp[0]).'</rp>' : '';
             $renderer->doc .= '<rt>'.hsc($data[1]).'</rt>';
             $renderer->doc .= isset($rp[1]) ? '<rp>'.hsc($rp[1]).'</rp>' : '';
             $renderer->doc .= '</ruby>';
-        } else {
-            // For non-XHTML format mode, render base text
-            // omit ruby text if a pair of parentheses is not set
-            $renderer->doc .= hsc($data[0]);
-            $renderer->doc .= !empty($rp) ? hsc($rp[0].$data[1].$rp[1]) : '';
         }
     }
 }
