@@ -24,35 +24,46 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
         return 150;
     }
 
+    /**
+     * Connect lookup pattern to lexer
+     */
     function connectTo($mode) {
-      $this->Lexer->addSpecialPattern('\{\{ruby\|[^}]*\}\}',$mode,'plugin_ruby');
+        $this->Lexer->addSpecialPattern('\{\{ruby\|[^}]*\}\}', $mode, 'plugin_ruby');
     }
 
+    /**
+     * Handle the match
+     */
     function handle($match, $state, $pos, Doku_Handler $handler) {
-        //Get the texts
-        //$texts[0] ... normal text / $texts[1] ... ruby
-        $texts = explode('|', substr($match, strlen('{{ruby|'), -2));
-
-        //Get the data of parentheses
-        $prts = $this->getConf('parentheses');
-
-        //If there is only one character in $prts, rp tags won't be outputted
-        if (mb_strlen($prts) <= 1) {
-            $lprt = null;
-            $rprt = null;
-        } else {
-            $lprt = mb_substr($prts,0,1);
-            $rprt = mb_substr($prts,1,1);
-        }
-        
-        return array($texts[0],$texts[1],$lprt,$rprt);
+        // get ruby base and text component of a ruby annotation
+        $data = explode('|', substr($match, strlen('{{ruby|'), -2));
+        return $data;
     }
 
+    /**
+     * Create output
+     */
     function render($format, Doku_Renderer $renderer, $data) {
-        if ($data[2] == null) {
-            $renderer->doc .= '<ruby><rb>' . htmlspecialchars($data[0]) . '</rb><rt>' . htmlspecialchars($data[1]) . '</rt></ruby>';
-        } else {
-            $renderer->doc .= '<ruby><rb>' . htmlspecialchars($data[0]) . '</rb><rp>' . htmlspecialchars($data[2]) . '</rp><rt>' . htmlspecialchars($data[1]) . '</rt><rp>' . htmlspecialchars($data[3]) . '</rp></ruby>';
+        static $rp;
+        if (!isset($rp)) {
+            if (utf8_strlen($this->getConf('parentheses')) > 1) {
+                // get a pair of ruby parentheses
+                $rp[0] = utf8_substr($this->getConf('parentheses'), 0, 1);
+                $rp[1] = utf8_substr($this->getConf('parentheses'), 1, 1);
+            } else {
+                // set an empty array
+                $rp = array();
+            }
+        }
+
+        if ($format == 'xhtml') {
+            // create a Group-ruby annotation
+            $renderer->doc .= '<ruby>';
+            $renderer->doc .= '<rb>'.hsc($data[0]).'</rb>';
+            $renderer->doc .= isset($rp[0]) ? '<rp>'.hsc($rp[0]).'</rp>' : '';
+            $renderer->doc .= '<rt>'.hsc($data[1]).'</rt>';
+            $renderer->doc .= isset($rp[1]) ? '<rp>'.hsc($rp[1]).'</rp>' : '';
+            $renderer->doc .= '</ruby>';
         }
     }
 }
