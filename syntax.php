@@ -65,5 +65,10 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= isset($rp[1]) ? '<rp>'.hsc($rp[1]).'</rp>' : '';
             $renderer->doc .= '</ruby>';
         }
+        if ($format == 'metadata') {
+            // when the format is "metadata" (abstract)
+            if ($renderer->capture) $renderer->doc .= hsc($data[0]) . hsc($rp[0]) . hsc($data[1]) . hsc($rp[1]);
+        }
+
     }
 }
