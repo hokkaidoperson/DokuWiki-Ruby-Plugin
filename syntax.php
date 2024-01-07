@@ -46,10 +46,10 @@ class syntax_plugin_ruby extends DokuWiki_Syntax_Plugin {
     function render($format, Doku_Renderer $renderer, $data) {
         static $rp;
         if (!isset($rp)) {
-            if (utf8_strlen($this->getConf('parentheses')) > 1) {
+            if (strlen($this->getConf('parentheses')) > 1) {
                 // get a pair of ruby parentheses
-                $rp[0] = utf8_substr($this->getConf('parentheses'), 0, 1);
-                $rp[1] = utf8_substr($this->getConf('parentheses'), 1, 1);
+                $rp[0] = substr($this->getConf('parentheses'), 0, 1);
+                $rp[1] = substr($this->getConf('parentheses'), 1, 1);
             } else {
                 // set an empty array
                 $rp = array();
